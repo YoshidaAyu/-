@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>シフト一覧</title>
+</head>
+
+<body>
+    <h2>登録完了！シフト一覧</h2>
+
+    <ul>
+        {% for shift in shifts %}
+            <li>{{ shift.date }} - {{ shift.name }}</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ url_for('index') }}">戻る</a>
+</body>
+</html>
