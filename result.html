@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>登録済みシフト</title>
+    <style>
+        body {
+            background-color: #ffe4e1;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .result-container {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            max-height: 80vh;
+            overflow-y: auto;
+            width: 400px;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .date-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .date-group > strong {
+            font-size: 18px;
+            color: #555;
+        }
+
+        .name-entry {
+            margin-left: 20px;
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        form {
+            display: inline;
+        }
+
+        form button {
+            background-color: #ff6666;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 4px 8px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #e60000;
+        }
+
+        
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="result-container">
+        <h2>登録済みシフト一覧</h2>
+
+        {% if grouped_shifts %}
+            <ul>
+                {% for date, shifts in grouped_shifts.items() %}
+                    <li class="date-group">
+                        <strong>📅 {{ date }}（{{ shifts[0].weekday }}）</strong>
+                        <ul>
+                            {% for entry in shifts %}
+                                <li class="name-entry">
+                                    {{ entry.name }}
+                                    <form method="post" action="{{ url_for('delete_shift', index=entry.index) }}">
+                                        <button type="submit" onclick="return confirm('このシフトを削除しますか？');">削除 🗑️</button>
+                                    </form>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>シフトはまだ登録されていません。</p>
+        {% endif %}
+
+        <a href="{{ url_for('index') }}">戻る</a>
+        <a href="{{ url_for('clear') }}" onclick="return confirm('本当にすべて削除しますか？');">すべて削除</a>
+    </div>
+</body>
+</html>
