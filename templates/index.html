@@ -1,19 +1,94 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-    <title>シフト登録アプリ</title>
+    <meta charset="UTF-8">
+    <title>シフト登録フォーム</title>
+    <style>
+        body {
+            background-color: #ffe4e1;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 350px;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input[type="date"], select {
+            padding: 14px;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        a {
+            margin-top: 10px;
+            display: inline-block;
+            text-decoration: none;
+            color: #007BFF;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
-
 <body>
-    <h2>シフト登録</h2>
+    <div class="form-container">
+        <h2>🧾 シフト登録フォーム 🧑‍💼</h2>
 
-    <form method="post">
-        日付: <input type="date" name="date" required><br><br>
-        スタッフ名: <input type="text" name="name" required><br><br>
-        <input type="submit" value="登録">
-    </form>
+        {% if error %}
+            <p class="error">⚠️ {{ error }}</p>
+        {% endif %}
+
+        <form method="post">
+            <input type="date" name="date" required>
+            <select name="name" required>
+                <option value="" disabled selected>スタッフを選んでね 👇</option>
+                <option value="吉田 🐱">吉田 🐱</option>
+                <option value="大野 🐶">大野 🐶</option>
+                <option value="藤井 🐰">藤井 🐰</option>
+            </select>
+            <input type="submit" value="登録 ➕">
+        </form>
+
+        <a href="{{ url_for('result') }}">📋 登録済みシフトを見る</a>
+    </div>
 </body>
 </html>
-<!DOCTYPE html>
-<html>
-<head>
